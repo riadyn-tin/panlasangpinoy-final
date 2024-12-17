@@ -1,0 +1,120 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: url('panlasangnoypi-final\images\pinoycuisine.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Main Container */
+.main-container {
+    position: relative;
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+}
+
+/* Logo Styling */
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+/* Glass Panel Styling */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    height: 450px;
+    position: relative;
+}
+
+/* Form Containers */
+.form-container {
+    width: 100%;
+    padding: 2rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+}
+
+/* Form Titles */
+.title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #d62300;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Form Inputs */
+.form-container input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    background: rgba(255, 255, 255, 0.8);
+    outline: none;
+}
+
+/* Buttons */
+.btn {
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #d62300;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.btn:hover {
+    background: #a01300;
+    transform: translateY(-3px);
+}
+
+/* Link in Register Form */
+.link {
+    font-size: 14px;
+    color: #d62300;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.link a {
+    color: #d62300;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+/* Back to Main Link */
+.back-to-main {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #000;
+    text-decoration: underline;
+    font-weight: 600;
+}

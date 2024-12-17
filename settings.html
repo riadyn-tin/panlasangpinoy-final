@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings - Panlasang Noypi</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .settings-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border: 3px solid #ddd;
+        }
+
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .btn {
+            border: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-status {
+            margin-top: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <h2>Profile Settings</h2>
+        <img id="profile-preview" src="images/profile-pic.png" alt="Profile Picture" class="profile-picture">
+        
+        <div class="upload-btn-wrapper">
+            <button class="btn">Upload Photo</button>
+            <input type="file" id="profile-upload" accept="image/*" />
+        </div>
+        
+        <div id="upload-status" class="upload-status"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get user email from localStorage
+            const userEmail = localStorage.getItem('userEmail');
+            console.log('Fetching profile picture for email:', userEmail); // Debugging
+    
+            if (userEmail) {
+                // Fetch the current profile picture from the server
+                fetch(`get-profile-picture.php?email=${encodeURIComponent(userEmail)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && data.profile_picture) {
+                            // Update the profile picture preview
+                            document.getElementById('profile-preview').src = data.profile_picture;
+                            // Update localStorage with the latest profile picture path
+                            localStorage.setItem('profilePicture', data.profile_picture);
+                        } else {
+                            console.error('Failed to fetch profile picture:', data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching profile picture:', error);
+                    });
+            }
+    
+            document.getElementById('profile-upload').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Show preview
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profile-preview').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+    
+                    // Create FormData and append file and email
+                    const formData = new FormData();
+                    formData.append('profile_picture', file);
+                    formData.append('email', userEmail);
+    
+                    // Show uploading status
+                    document.getElementById('upload-status').textContent = 'Uploading...';
+    
+                    fetch('upload-profile-picture.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('upload-status').textContent = 'Upload successful!';
+                            // Update localStorage with new profile picture path
+                            localStorage.setItem('profilePicture', data.image_path);
+                            
+                            // Update all instances of the user's profile picture on the current page
+                            const profileImages = document.querySelectorAll('.profile-image');
+                            profileImages.forEach(img => {
+                                img.src = data.image_path;
+                            });
+                        } else {
+                            document.getElementById('upload-status').textContent = 'Upload failed: ' + data.message;
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById('upload-status').textContent = 'Upload failed: ' + error.message;
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

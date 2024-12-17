@@ -1,0 +1,109 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4f0ec; /* Light beige background */
+    color: #333; /* Dark text color */
+}
+
+/* Contributors Section */
+.contributors {
+    display: flex;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    padding: 2rem;
+    scroll-behavior: smooth; /* Smooth scrolling */
+    background-color: #ffffff; /* White background for the contributor section */
+}
+
+.contributor-card {
+    flex: 0 0 auto; /* Prevents flex items from shrinking */
+    text-align: center;
+    background-color: #f0e6d7; /* Soft beige background for cards */
+    border-radius: 10px; /* Rounded corners */
+    margin-right: 1rem; /* Space between cards */
+    transition: transform 0.3s; /* Smooth scaling */
+    padding: 1rem;
+    width: 200px; /* Fixed width for the contributor cards */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.contributor-card:hover {
+    transform: scale(1.05); /* Scale up on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+.contributor-image {
+    width: 150px;           /* Fixed width */
+    height: 150px;          /* Fixed height */
+    border-radius: 50%;     /* Circular images */
+    object-fit: cover;      /* Ensures the image fills the area without distortion */
+    margin-bottom: 1rem;    /* Space between image and text */
+}
+
+h2 {
+    text-align: center; /* Center the title */
+    margin: 1rem 0; /* Spacing around title */
+    color: #885133; /* Dark brown color for the title */
+}
+
+/* Navigation Bar and Footer Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #885133; /* Dark brown background for navbar */
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 600;
+    border-radius: 25px; /* Rounded corners */
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-links li a:hover {
+    background-color: white;
+    color: #885133; /* Dark brown */
+}
+
+.footer {
+    background-color: #ff5722; /* Footer color */
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+    margin-top: auto;
+   
+}
+
+.footer .social-media {
+    margin-bottom: 1rem;
+}
+
+.footer .social-link {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 2rem; /* Size of icons */
+    color: white;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer .social-link:hover {
+    transform: scale(1.2);
+    color: #ffe0b2; /* Change color on hover */
+}
+
+.footer p {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}

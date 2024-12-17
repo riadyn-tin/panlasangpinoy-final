@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panlasang Noypi</title>
+    <link rel="stylesheet" href="css\styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="scripts.js" defer></script>
+
+    <style>
+      .navbar {
+        transition: top 0.3s;
+        position: fixed;
+        width: 100%;
+        top: -1300px; /* Hide initially */
+      }
+
+      .navbar.show {
+        top: 0; /* Show when scrolled */
+      }
+
+      .user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-name {
+  font-family: 'Montserrat', sans-serif; /* Using your existing font or choose another */
+  font-size: 14px; /* Adjust size as needed */
+  font-weight: 600; /* Makes the text semi-bold */
+  color: #ffffff; /* Change text color */
+  margin-top: 5px; /* Space between profile pic and name */
+  text-align: center;
+  padding: 4px 8px; /* Add some padding around the text */
+  /* Optional: add a background */
+  border-radius: 4px;
+  /* Optional: add a subtle shadow */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Add hover effect */
+
+
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1000;
+  border-radius: 8px;
+  padding: 8px 0;
+}
+
+.profile-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.dropdown-content a:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 8px 0;
+}
+
+.dropdown-content i {
+  width: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.profile-pic {
+  position: relative;
+  display: inline-block;
+}
+
+
+.profile-image {
+  margin-right: -10px;
+  margin-left: -10px;
+  margin-bottom: -10px;
+  border-radius: 50%;
+  width: 80px;
+  height: 70px;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Panel -->
+    <nav class="navbar">
+      <div class="logo">
+        <img src="./images/panlasangnoypi.png" alt="Panlasang Noypi Logo" />
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#types">Types</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#about">About Us</a></li>
+      </ul>
+      <div class="auth-links">
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            const authLinksContainer = document.querySelector(".auth-links");
+
+            function updateAuthLinks() {
+              const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+              const userName = localStorage.getItem("userName");
+              const userEmail = localStorage.getItem("userEmail");
+
+              if (isLoggedIn && userName && userEmail) {  // Make sure we have the email
+                // Fetch profile picture for specific user from database
+                fetch(`get-profile-picture.php?email=${encodeURIComponent(userEmail)}`)
+                  .then(response => response.json())
+                  .then(data => {
+                    const profilePicture = data.success ? data.profile_picture : 'images/profile-pic.png';
+                    
+                    authLinksContainer.innerHTML = `
+                      <div class="user-info">
+                        <div class="profile-dropdown">
+                          <a href="javascript:void(0);" class="profile-pic">
+                            <img src="${profilePicture}" alt="Profile Picture" class="profile-image">
+                          </a>
+                          <div class="dropdown-content">
+                            <a href="settings.html">
+                              <i class="fas fa-user"></i> My Profile
+                            </a>
+                            <a href="javascript:void(0);">
+                              <i class="fas fa-address-book"></i> My Addresses
+                            </a>
+                            <a href="javascript:void(0);">
+                              <i class="fas fa-phone"></i> My Contact Numbers
+                            </a>
+                            <a href="javascript:void(0);">
+                              <i class="fas fa-ticket-alt"></i> Coupons
+                            </a>
+                            <a href="javascript:void(0);">
+                              <i class="fas fa-gift"></i> My Gift Certificates
+                            </a>
+                            <a href="javascript:void(0);">
+                              <i class="fas fa-id-card"></i> My Senior Citizen/PWD ID
+                            </a>
+                            <a href="javascript:void(0);">
+                              <i class="fas fa-heart"></i> My Favorites
+                            </a>
+                            <div class="dropdown-divider"></div>
+<a href="javascript:void(0);" onclick="logout()">
+  <i class="fas fa-sign-out-alt"></i> Logout
+</a>
+                          </div>
+                        </div>
+                        <span class="user-name">${userName}</span>
+                      </div>
+                    `;
+                  })
+                  .catch(error => {
+                    console.error('Error fetching profile picture:', error);
+                    // Use default picture if fetch fails
+                    const profilePicture = 'images/profile-pic.png';
+                    // ... render the HTML with default picture ...
+                  });
+              } else {
+                authLinksContainer.innerHTML = `
+                  <a href="javascript:void(0);" class="btn" onclick="openLoginPopup()">Sign In</a>
+                `;
+              }
+            }
+            function logout() {
+  // Clear only authentication-related data
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('userName');
+  localStorage.removeItem('userEmail');
+  // Do NOT remove profilePicture from localStorage
+  
+  // Redirect to the home page
+  window.location.href = 'index.html';
+}
+
+            updateAuthLinks();
+          });
+        </script>
+      </div>
+      <div class="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section scroll-animation">
+      <h1 class="scroll-animation delay-1">Welcome to Panlasang Noypi</h1>
+      <p class="scroll-animation delay-2">Your go-to website for Filipino recipes!</p>
+      <a href="#categories" class="btn scroll-animation delay-3">Explore Recipes</a>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="about-section scroll-animation">
+      <h2 class="scroll-animation delay-1">About Us</h2>
+      <p class="scroll-animation delay-2">
+        Welcome to Panlasang Noypi! Our mission is to bring you the best and
+        most authentic Filipino recipes from across the archipelago. We believe
+        in the power of food to connect people, share cultures, and create
+        lasting memories. Our team of culinary enthusiasts is dedicated to
+        exploring the rich culinary heritage of the Philippines and sharing our
+        passion with you.
+      </p>
+      <button
+        id="show-contributors"
+        class="btn nav-button scroll-animation delay-3"
+        onclick="window.location.href='show-contributors.html';"
+      >
+        Show Contributors
+      </button>
+
+      <div id="contributors" class="contributors" style="display: none">
+        <h3>Contributors</h3>
+        <ul>
+          <li>1. Juan dela Cruz - Head Chef</li>
+          <li>2. Maria Clara - Recipe Developer</li>
+          <li>3. Jose Rizal - Food Photographer</li>
+          <li>4. Andres Bonifacio - Content Writer</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="order-online scroll-animation">
+      <h2 class="scroll-animation delay-1">You can now order online with<span class="underline"></span></h2>
+      <div class="order-options">
+        <div class="order-option scroll-animation delay-1">
+          <img src="images/self-pick-up.png" alt="Self Pick-Up" />
+        </div>
+        <div class="order-option scroll-animation delay-2">
+          <img src="images/deliveroo.png" alt="Deliveroo" />
+        </div>
+        <div class="order-option scroll-animation delay-2">
+          <img src="images/foodpanda.png" alt="Foodpanda" />
+        </div>
+        <div class="order-option scroll-animation delay-3">
+          <img src="images/grab.png" alt="Grab Food" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section scroll-animation">
+      <h2 class="scroll-animation delay-1">Contact Us</h2>
+      <div class="contact-container">
+        <div class="contact-form scroll-animation delay-2">
+          <form id="contact-form">
+            <div class="contact-input-group">
+              <label for="name" class="contact-label">Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            
+            <div class="contact-input-group">
+              <label for="email" class="contact-label">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            
+            <div class="contact-input-group">
+              <label for="message" class="contact-label">Message</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            
+            <button type="submit" class="scroll-animation delay-3">Send</button>
+          </form>
+        </div>
+        <div class="google-map scroll-animation delay-3">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9428.631583647015!2d124.84470584681003!3d6.489836337138584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f81894a34e543f%3A0xf3131275609f854e!2sNotre%20Dame%20of%20Marbel%20University!5e0!3m2!1sen!2sph!4v1729066321906!5m2!1sen!2sph"
+            width="400"
+            height="300"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+          >
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer scroll-animation">
+      <div class="footer-content">
+        <div class="footer-section scroll-animation delay-1">
+          <h3>About Panlasang Pinoy</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Outlets</a></li>
+            <li><a href="#">Career</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Menu</h3>
+          <ul>
+            <li><a href="#">Grand Menu</a></li>
+            <li><a href="#">Seasonal Menu</a></li>
+            <li><a href="#">Take Away Menu</a></li>
+            <li><a href="#">Promotions</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Order Online</h3>
+          <ul>
+            <li><a href="#">Foodpanda</a></li>
+            <li><a href="#">Deliveroo</a></li>
+            <li><a href="#">Grab Food</a></li>
+            <li><a href="#">Self Pick-Up</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Terms</h3>
+          <ul>
+            <li><a href="#">Terms and Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Panlasang Pinoy. All rights reserved.</p>
+        <div class="social-media">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="loading-spinner" style="display: none">
+      <div class="spinner"></div>
+    </div>
+
+
+    <div id="login-popup" class="login-popup" style="display: none;">
+            <button class="close-btn" onclick="closeLoginPopup()">
+                <span class="close-icon">×</span>
+            </button>
+            <div class="login-header">
+            <h2 class="login-title">Login</h2>
+            <p class="login-subtitle">Enter your details to begin</p>
+            </div>
+            <div class="login-container">
+                <div class="sign-in-container">
+                <h3>Already have an account? Log in here!</h3> 
+            </div>
+                <div class="image-container">
+                    <img src="images/panlasangnoypi.png" alt="" class="resized-image">
+                </div>
+            <button class="member-sign-in">Log in</button></div>
+            <div class="quick-checkout">
+                <div class="line"></div>
+                <span>OR SIGN IN WITH QUICK CHECK OUT</span>
+                <div class="line"></div>
+            </div>
+            <form action="register.php" method="POST">
+            <div class="input-container">
+                <input type="text" id="full-name" name="full-name" placeholder=" " required>
+                <label for="full-name">Full Name</label>
+            </div>
+            <div class="input-container">
+                <input type="email" id="email" name="email" placeholder=" " required>
+                <label for="email">Email Address</label>
+            </div>
+            <div class="input-container">
+                <input type="password" id="password" name="password" placeholder=" " required>
+                <label for="password">Password</label>
+            </div>
+            <div class="button-submit">
+            <button class="submit-button">Submit</button>
+          </form>
+
+                <div class="account-links">
+                    <a href="create-account.html" class="link">FORGOT USERNAME</a>
+                    <span class="separator">|</span>
+                    <a href="#" class="link">FORGOT PASSWORD  </a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div id="overlay" class="overlay"></div>
+
+    <form action="login.php" method="POST">
+    <div id="login-form-popup" class="login-popup">
+      <button class="close-btn" onclick="closeLoginFormPopup()">
+        <span class="close-icon">×</span>
+      </button>
+      <button class="back-btn" onclick="goBackToSignInPopup()">Go Back</button>
+      <div class="login-header">
+        <h2 class="login-title">Login</h2>
+        <p class="login-subtitle">Please enter your login details</p>
+      </div>
+      <div class="login-container">
+        <div class="input-container">
+          <input type="email" id="login-email" name="email" placeholder=" " required>
+          <label for="login-email">Email Address</label>
+        </div>
+        <div class="input-container">
+          <input type="password" id="login-password" name="password" placeholder=" " required>
+          <label for="login-password">Password</label>
+        </div>
+        <div class="button-submit">
+          <button class="submit-button" onclick="submitLoginForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+    <script src="scripts.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get("message");
+
+        if (message) {
+          const messageContainer = document.createElement("div");
+          messageContainer.id = "popup-message";
+          messageContainer.textContent = message;
+          messageContainer.style.position = "fixed";
+          messageContainer.style.top = "10px";
+          messageContainer.style.right = "10px";
+          messageContainer.style.backgroundColor = "#4CAF50";
+          messageContainer.style.color = "white";
+          messageContainer.style.padding = "10px";
+          messageContainer.style.borderRadius = "5px";
+          document.body.appendChild(messageContainer);
+
+          setTimeout(() => {
+            messageContainer.style.display = "none";
+          }, 5000); // Hide after 5 seconds
+        }
+
+        // Load the profile image from the server
+        fetch("get-profile-image.php") // Adjust this to your server endpoint
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.imagePath) {
+              localStorage.setItem('profilePicture', data.imagePath); // Store in localStorage
+              document.querySelector(".profile-image").src = data.imagePath; // Update the profile image
+            }
+          });
+
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const loginBtn = document.getElementById("login-btn");
+
+        function checkInput() {
+          const email = emailInput.value.trim(); // Trim whitespace
+          const password = passwordInput.value.trim(); // Trim whitespace
+          
+          console.log("Email:", email); // Debugging
+          console.log("Password:", password); // Debugging
+
+          // Enable button only if both fields are filled
+          loginBtn.disabled = email === "" || password === ""; // Check if either field is empty
+
+          // Update button styles based on its state
+          if (loginBtn.disabled) {
+            loginBtn.classList.add("disabled"); // Add disabled class for styling
+          } else {
+            loginBtn.classList.remove("disabled"); // Remove disabled class
+          }
+        }
+
+        // Ensure checkInput is called on input events
+        emailInput.addEventListener("input", checkInput);
+        passwordInput.addEventListener("input", checkInput);
+
+        // Call checkInput initially to set the correct state
+        checkInput(); // Ensure the button state is correct on page load
+
+        const userData = JSON.parse(localStorage.getItem('userData')) || {};
+        if (userData.profilePicture) {
+            currentProfilePicture.src = userData.profilePicture;
+        }
+      });
+
+      function openPopup() {
+        document.getElementById("popup").style.display = "block";
+        document
+          .getElementById("main-content")
+          .classList.add("blur-background");
+      }
+
+      function closePopup() {
+        document.getElementById("popup").style.display = "none";
+        document
+          .getElementById("main-content")
+          .classList.remove("blur-background");
+      }
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+
+      // Scroll animation
+      const animatedElements = document.querySelectorAll(".animate");
+
+      function checkScroll() {
+        const triggerBottom = (window.innerHeight / 5) * 4; // Trigger when 80% of the element is visible
+
+        animatedElements.forEach((element) => {
+          const box = element.getBoundingClientRect();
+          if (box.top < triggerBottom) {
+            element.classList.add("show");
+          } else {
+            element.classList.remove("show");
+          }
+        });
+
+        // Show/hide navbar based on scroll position
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          // Adjust this value as needed
+          navbar.classList.add("show");
+        } else {
+          navbar.classList.remove("show");
+        }
+      }
+
+      window.addEventListener("scroll", checkScroll);
+      window.addEventListener("load", checkScroll); // Check on load
+
+      function openLoginPopup() {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("login-popup").style.display = "block";
+        document.body.style.overflow = "hidden"; // Prevent scrolling while popup is open
+      }
+
+      function closeLoginPopup() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("login-popup").style.display = "none";
+        document.body.style.overflow = "auto"; // Re-enable scrolling
+      }
+
+      function validateForm() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        let valid = true;
+
+        // Reset error messages
+        document.getElementById("email-error").style.display = "none";
+        document.getElementById("password-error").style.display = "none";
+
+        // Validate email
+        if (!email) {
+          document.getElementById("email-error").style.display = "block";
+          valid = false;
+        }
+
+        // Validate password
+        if (!password) {
+          document.getElementById("password-error").style.display = "block";
+          valid = false;
+        }
+
+        return valid; // Prevent form submission if invalid
+      }
+
+      function loginAsGuest() {
+        // Implement guest login functionality here
+        alert("Continuing as guest...");
+      }
+
+      // Scroll animation function with immediate visibility for elements in viewport
+      function scrollAnimation() {
+        const elements = document.querySelectorAll('.scroll-animation');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '50px'
+        });
+
+        // Check if element is already in viewport on page load
+        function isInViewport(element) {
+          const rect = element.getBoundingClientRect();
+          return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+          );
+        }
+
+        // Activate elements that are already visible on page load
+        elements.forEach(element => {
+          if (isInViewport(element)) {
+            element.classList.add('active');
+          }
+          observer.observe(element);
+        });
+      }
+
+      // Initialize animations when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        scrollAnimation();
+      });
+
+      // Reinitialize animations when all content is loaded
+      window.addEventListener('load', function() {
+        scrollAnimation();
+        
+        // Force recheck after a small delay to catch any dynamic content
+        setTimeout(scrollAnimation, 500);
+      });
+
+      // Add this function to handle the "Log in" button click
+      document.querySelector('.member-sign-in').addEventListener('click', function() {
+        closeLoginPopup(); // Close the current login popup
+        openLoginFormPopup(); // Open the new login form popup
+      });
+
+      function openLoginFormPopup() {
+        document.getElementById("overlay").style.display = "block";
+        const loginFormPopup = document.getElementById("login-form-popup");
+        loginFormPopup.style.display = "block"; // Ensure it's visible
+        loginFormPopup.classList.add("active"); // Add active class
+        document.body.style.overflow = "hidden"; // Prevent scrolling
+      }
+
+      function closeLoginFormPopup() {
+        document.getElementById("overlay").style.display = "none";
+        const loginFormPopup = document.getElementById("login-form-popup");
+        loginFormPopup.style.display = "none"; // Hide the popup
+        loginFormPopup.classList.remove("active"); // Remove active class
+        document.body.style.overflow = "auto"; // Re-enable scrolling
+      }
+
+      function submitLoginForm() {
+        // Assuming login is successful
+        const userName = "User"; // Replace with actual user name
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userName", userName);
+        window.location.href = `index.html?`;
+      }
+
+      function goBackToSignInPopup() {
+        closeLoginFormPopup(); // Close the current login form popup
+        openLoginPopup(); // Open the sign-in popup
+      }
+    </script>
+    <script>
+        // Global logout function
+        function logout() {
+            // Redirect to logout success page
+            window.location.href = 'logout-success.html';
+        }
+    </script>
+  </body>
+</html>

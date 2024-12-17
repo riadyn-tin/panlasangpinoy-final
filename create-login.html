@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panlasang Noypi - Create Account</title>
+    <link rel="stylesheet" href="css/create-login.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- Logo -->
+      <a href="index.html">
+        <img
+          src="images\panlasangnoypi.png"
+          alt="Panlasang Noypi"
+          class="logo"
+        />
+      </a>
+
+      <!-- Glass Panel -->
+      <div class="glass-panel">
+        <!-- Register Form -->
+        <div class="form-container signup-form">
+          <h2 class="title">CREATE ACCOUNT</h2>
+          <form action="register.php" method="POST">
+            <input
+              type="text"
+              placeholder="Full Name"
+              id="name"
+              name="name"
+              required
+            />
+            <input
+              type="email"
+              placeholder="Email Address"
+              id="email"
+              name="email"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              id="password"
+              name="password"
+              required
+            />
+            <button id="submit" type="submit" class="btn">Sign Up</button>
+          </form>
+          <p class="link">
+            Already have an account? <a href="login.html">Sign In</a>
+          </p>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-to-main">Go to Main Page</a>
+
+      <!-- Pop-up Message -->
+      <div id="popup" class="popup" style="display: none">
+        <span id="popup-message"></span>
+        <button onclick="closePopup()">Close</button>
+      </div>
+    </div>
+
+    <script>
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(form);
+
+        fetch("register.php", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              window.location.href = `login.html?message=${encodeURIComponent(
+                data.message
+              )}`;
+            } else {
+              alert(data.message); // Show error message
+            }
+          })
+          .catch((error) => {
+            alert("An error occurred. Please try again.");
+          });
+      });
+
+      function closePopup() {
+        popup.style.display = "none";
+      }
+    </script>
+  </body>
+</html>

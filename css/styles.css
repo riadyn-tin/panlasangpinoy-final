@@ -1,0 +1,1385 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: #f4f0ec; /* Light Beige */
+    color: #333; /* Default text color */
+  }
+  
+  /* Navbar basic styling */
+  .navbar {
+    display: flex;
+    justify-content: space-between; /* Distributes space between logo, links, and buttons */
+    align-items: center;
+    background-color: #d62300; /* Dark Brown */
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  /* Center the navigation links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    flex-grow: 1; /* Allow nav-links to grow and take available space */
+    justify-content: center; /* Center the nav links */
+  }
+  
+  .nav-links li {
+    display: inline; /* Ensure list items are inline */
+  }
+  
+  .nav-links li a {
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 600;
+    border: 2px solid transparent;
+    border-radius: 25px; /* Rounded corners for button-like appearance */
+    background-color: transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-links li a:hover {
+    background-color: #ffffff; /* White */
+    color: #885133; /* Dark Brown */
+    border: 2px solid #885133; /* Dark Brown */
+  }
+  
+  /* Auth Links */
+  .auth-links {
+    display: flex;
+    gap: 15px; /* Space between Sign In and Register buttons */
+  }
+  
+  .auth-links a {
+    padding: 10px 20px;
+    color: #ffffff; /* White */
+    font-weight: 600;
+    border: 2px solid transparent;
+    border-radius: 25px; /* Rounded corners for button-like appearance */
+    background-color: transparent;
+    transition: all 0.3s ease;
+    text-decoration: none; /* Remove underline */
+  }
+  
+  .auth-links a:hover {
+    background-color: #ffffff; /* White */
+    color: #885133; /* Dark Brown */
+    border: 2px solid #885133; /* Dark Brown */
+  }
+  
+  /* Responsive burger menu styling */
+  .burger {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .burger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px;
+    transition: 0.3s;
+  }
+  
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+  
+    .burger {
+      display: block;
+    }
+  }
+  
+  /* ... existing code ... */
+  .hero-section {
+    position: relative; /* Position relative for absolute overlay */
+    height: 100vh; /* Makes the section height fill the viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    background-image: url("../images/pinoycuisine.jpg"); /* Path to your image */
+    background-size: cover; /* Ensures the image covers the entire section */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+  }
+  
+  .hero-section::before {
+    content: ""; /* Create a pseudo-element */
+    position: absolute; /* Position it absolutely to cover the section */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    z-index: 1; /* Place it behind the text */
+  }
+  
+  .hero-section h1,
+  .hero-section p {
+    position: relative; /* Ensure text appears above the overlay */
+    z-index: 2; /* Place text above the overlay */
+  }
+  
+  .hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add text shadow for better readability */
+  }
+  
+  .hero-section p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add text shadow for better readability */
+  }
+  
+  .hero-section .btn {
+    background-color: transparent;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid white; /* Add a transparent border */
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Add border-color to transition */
+    position: relative; /* Position for layering */
+    z-index: 2; /* Place button above overlay */
+  }
+  
+  .hero-section .btn:hover {
+    background-color: red; /* Change background color on hover */
+    color: white;
+    border-color: red; /* Change border color on hover */
+  }
+  
+  .categories-section,
+  .types-section,
+  .contact-section,
+  .about-section {
+    padding: 3rem 2rem;
+    text-align: center;
+    background-color: #f0e6d7; /* Soft Beige */
+  }
+  
+  .categories-section h2,
+  .types-section h2,
+  .contact-section h2,
+  .about-section h2 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: #d62300; /* Bright Red */
+  }
+  
+  .categories,
+  .types {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .category-card,
+  .type-card {
+    background-color: #ffffff; /* White for cards */
+    padding: 1.5rem;
+    width: 200px;
+    margin: 1rem;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .category-card:hover,
+  .type-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .contact-section form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  .contact-section input,
+  .contact-section textarea {
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .contact-section button {
+    padding: 0.75rem;
+    background-color: #d62300; /* Bright Red */
+    color: #ffffff; /* White */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contact-section button:hover {
+    background-color: #c01e00; /* Slightly darker red on hover */
+  }
+  
+  .about-section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 800px;
+  }
+  .about-section {
+    padding: 3rem 2rem;
+    text-align: center;
+    background-color: #f0e6d7; /* Soft Beige */
+  }
+  
+  .about-section h2 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: #d62300; /* Bright Red */
+  }
+  
+  .about-section p {
+    text-align: justify; /* Justify the text */
+    margin-bottom: 2rem;
+    line-height: 1.6; /* Improve readability */
+  }
+  
+  .contributors {
+    text-align: left; /* Align the contributors list to the left */
+    margin-top: 1rem;
+  }
+  
+  .contributors ul {
+    list-style: none; /* Remove bullets */
+    padding-left: 0; /* Remove padding */
+  }
+  
+  .contributors li {
+    margin: 0.5rem 0; /* Space between contributors */
+  }
+  
+  @media (max-width: 768px) {
+    .navbar .nav-links {
+      display: none;
+    }
+  
+    .burger {
+      display: block;
+    }
+  
+    .categories,
+    .types {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .contact-section form {
+      width: 90%;
+    }
+  }
+  
+  .logo img {
+    max-height: 60px; /* Adjust the height to fit the navbar */
+    width: auto; /* Ensures the width scales proportionally */
+    object-fit: contain; /* Ensures the image doesn't get stretched */
+  }
+  
+  .footer {
+    background-color: #f8f8f8; /* Light background color */
+    padding: 20px 0; /* Padding for top and bottom */
+    text-align: center; /* Center text */
+  }
+  
+  .footer-content {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-around; /* Space out sections */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    max-width: 1200px; /* Max width for the footer */
+    margin: 0 auto; /* Center the footer */
+  }
+  
+  .footer-section {
+    flex: 1; /* Allow sections to grow equally */
+    min-width: 200px; /* Minimum width for sections */
+    margin: 10px; /* Margin between sections */
+    text-align: left; /* Align text to the left */
+  }
+  
+  .footer-section h3 {
+    font-weight: bold; /* Bold section titles */
+    margin-bottom: 10px; /* Space below titles */
+    font-size: 1.2rem; /* Adjust font size for titles */
+  }
+  
+  .footer-section ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+  }
+  
+  .footer-section ul li {
+    margin: 5px 0; /* Space between list items */
+    font-size: 0.9rem; /* Adjust font size for list items */
+    color: #333; /* Text color */
+  }
+  
+  .footer-bottom {
+    margin-top: 20px; /* Space above the bottom section */
+    font-size: 14px; /* Smaller font size */
+  }
+  
+  .social-media {
+    margin-top: 10px; /* Space above social media icons */
+  }
+  
+  .social-media a {
+    margin: 0 10px; /* Space between icons */
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Icon color */
+  }
+  
+  h1,
+  h2 {
+    font-family: "Pacifico", cursive;
+  }
+  
+  body {
+    font-family: "Montserrat", sans-serif;
+  }
+  .contact-section {
+    padding: 3rem 2rem;
+    text-align: center;
+    background-color: #f4f0ec; /* Light Beige */
+  }
+  
+  .contact-section h2 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: #d62300; /* Bright Red */
+  }
+  
+  .contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items at the top */
+    gap: 2rem; /* Space between the form and map */
+    max-width: 1200px; /* Limit the maximum width of the container */
+    margin: 0 auto; /* Center the container */
+  }
+  
+  .contact-form {
+    flex: 1; /* Take up available space */
+    min-width: 300px; /* Set a minimum width for better layout */
+  }
+  
+  .contact-section form {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease; /* Add transition for effects */
+  }
+  
+  .contact-section input,
+  .contact-section textarea {
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for border color and shadow */
+  }
+  
+  .contact-section input:focus,
+  .contact-section textarea:focus {
+    border-color: #d62300; /* Bright Red on focus */
+    box-shadow: 0 0 5px rgba(214, 35, 0, 0.5); /* Subtle shadow effect */
+    outline: none; /* Remove default outline */
+  }
+  
+  .contact-section button {
+    padding: 0.75rem;
+    background-color: #d62300; /* Bright Red */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for background color and scale */
+  }
+  
+  .contact-section button:hover {
+    background-color: #a61b00; /* Darker shade on hover */
+    transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  .google-map {
+    flex: 1; /* Take up available space */
+    min-width: 300px; /* Set a minimum width for better layout */
+  }
+  
+  .google-map iframe {
+    width: 100%; /* Make the iframe responsive */
+    height: 300px; /* Set height */
+    border: 0; /* Remove border */
+  }
+  
+  /* Style for the buttons */
+  .btn,
+  .nav-button {
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 600;
+    border: 2px solid transparent;
+    border-radius: 25px; /* Rounded corners for button-like appearance */
+    background-color: #d62300; /* Bright Red */
+    transition: all 0.3s ease;
+    cursor: pointer; /* Change cursor to pointer for better UX */
+  }
+  
+  .btn:hover,
+  .nav-button:hover {
+    background-color: #f0e6d7; /* Soft Beige */
+    color: #d62300; /* Bright Red */
+    border: 2px solid #d62300; /* Bright Red */
+  }
+  
+  /* Fade-in animation */
+  .fade-in {
+    opacity: 0; /* Start fully transparent */
+    transform: translateY(20px); /* Start slightly lower */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transition for fade and position */
+  }
+  
+  .fade-in.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Move back to original position */
+  }
+  .contributors {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center the contributor cards */
+    flex-wrap: wrap; /* Allow wrapping to the next line if needed */
+    padding: 2rem; /* Add some padding around the section */
+  }
+  
+  .contributor-card {
+    background-color: #f0e6d7; /* Light background for each card */
+    border: 2px solid #d62300; /* Red border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 1.5rem; /* Inner padding */
+    margin: 1rem; /* Space between cards */
+    text-align: center; /* Center text within cards */
+    width: 250px; /* Fixed width for cards */
+  }
+  
+  .contributor-image {
+    width: 100px; /* Set width for images */
+    height: 100px; /* Set height for images */
+    border-radius: 50%; /* Make images circular */
+    object-fit: cover; /* Ensure image covers the area without distortion */
+    margin-bottom: 1rem; /* Space between image and text */
+  }
+  
+  /* Loading Spinner CSS */
+  #loading-spinner {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(
+      255,
+      255,
+      255,
+      0.8
+    ); /* Semi-transparent white background */
+    z-index: 9999; /* On top of all content */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #d62300; /* Bright Red */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Spinner animation */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .popup .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  #popup-message {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .blur-background {
+    filter: blur(5px);
+  }
+  .popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .popup .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  #popup-message {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .blur-background {
+    filter: blur(5px);
+  }
+  .popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .popup .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    color: #000000;
+    font-size: 24px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    padding: 5px;
+    z-index: 1000;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .popup .close-btn:hover {
+    opacity: 0.7;
+  }
+  
+  #popup-message {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .blur-background {
+    filter: blur(5px);
+  }
+  
+  .order-online {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  .order-options {
+    display: flex;
+    justify-content: center;
+    gap: 2rem; /* Space between options */
+  }
+  
+  .order-option {
+    background-color: #f0f0f0; /* Light background for options */
+    border-radius: 10px; /* Rounded corners */
+    padding: 1rem;
+    text-align: center;
+    width: 150px; /* Fixed width for options */
+  }
+  
+  .order-option img {
+    width: 50px; /* Adjust icon size */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .footer {
+    background-color: #f0efef; /* Dark background for footer */
+    color: #707071; /* White text */
+    padding: 2rem 0;
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-around; /* Space between footer sections */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  }
+  
+  .footer-section {
+    margin: 1rem; /* Space around sections */
+  }
+  
+  .footer-section h3 {
+    margin-bottom: 1rem; /* Space below headings */
+  }
+  
+  .footer-section ul {
+    list-style: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+  }
+  
+  .footer-section a {
+    color: #9a999c; /* White links */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  .footer-bottom {
+    margin-top: 1rem; /* Space above bottom section */
+  }
+  
+  .social-media a {
+    margin: 0 10px; /* Space between icons */
+    color: white; /* White */
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Animation styles */
+  .fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  .fade-in.show {
+    opacity: 1;
+  }
+  
+  /* Add any additional styles for your animations */
+  .animate {
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  .animate.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* Add this CSS to hide the navbar initially */
+  .navbar {
+    transition: top 0.3s; /* Smooth transition for showing/hiding */
+    position: fixed;
+    top: -100px; /* Hide the navbar off-screen */
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top */
+  }
+  .navbar.show {
+    top: 0; /* Show the navbar */
+  }
+  
+  .order-online {
+    text-align: center;
+    padding: 2rem 0; /* Consistent padding */
+    background-color: white;
+  }
+  
+  .order-online h2 {
+    font-size: 2.5rem;
+    color: #d62300; /* Bright Red */
+  }
+  
+  .order-options {
+    display: flex;
+    justify-content: center;
+    gap: 100px; /* Space between options */
+    flex-wrap: wrap; /* Allow wrapping to the next line if needexd */
+  }
+  
+  .order-option {
+    background-color: #ffffff; /* Light background for options */
+  }
+  
+  .order-option img {
+    width: 200px; /* Adjust icon size for uniformity */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .underline {
+    display: block; /* Make it a block element */
+    width: 20%; /* Adjust the width as needed */
+    height: 2px; /* Thickness of the line */
+    background-color: red; /* Color of the line */
+    margin: 0.5rem auto; /* Center the line and add space above/below */
+  }
+  
+  .login-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 750px; /* Adjust width as needed */
+    min-height: 800px; /* Set a minimum height */
+    background-color: transparent; /* Make the popup background transparent */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    border-radius: 10px; /* Rounded corners */
+    z-index: 1000;
+    padding: 20px; /* Padding for content */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+  }
+  
+  .popup-content {
+    text-align: center; /* Center text */
+    background-color: white; /* White background for the content inside the popup */
+    padding: 20px; /* Padding for content */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: black; /* Dark background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    width: 30px; /* Width of the button */
+    height: 30px; /* Height of the button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer; /* Pointer cursor */
+    font-size: 20px; /* Font size for the "X" */
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
+  
+  .close-btn:hover {
+    background-color: #1b1b1b; /* Slightly lighter on hover */
+  }
+  
+  .back-btn {
+    display: none;
+  }
+
+  /* Show the Go Back button when the login-form-popup is active */
+  #login-form-popup.active .back-btn {
+    display: block;
+  }
+
+  .login-popup {
+    display: none; /* Ensure it's hidden by default */
+    position: fixed; /* Fixed position to overlay the page */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the popup */
+    background-color: white; /* Background color */
+    padding: 20px; /* Padding for content */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    z-index: 1001; /* Ensure it's above other elements */
+  }
+
+  .back-btn {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+    color: white;
+    font-size: 16px;
+  }
+
+  .back-btn:hover {
+    color: red;
+    font-weight: bold;
+  }
+
+  #login-form-popup.active .back-btn {
+    display: block; /* Show when active */
+  }
+  input[type="email"],
+  input[type="password"] {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Padding for inputs */
+    margin: 10px 0; /* Margin for spacing */
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 5px; /* Rounded corners for inputs */
+    box-sizing: border-box; /* Ensure padding is included in width */
+  }
+  
+  input::placeholder {
+    color: #aaa; /* Placeholder color */
+    opacity: 1; /* Ensure full opacity */
+  }
+  
+  .login-btn {
+    background-color: #f0c14b; /* Button color */
+    color: #111; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners for buttons */
+    padding: 10px; /* Padding for buttons */
+    cursor: pointer; /* Pointer cursor */
+    width: 100%; /* Full width */
+  }
+  
+  .login-btn:hover {
+    background-color: #ddb347; /* Darker button color on hover */
+  }
+  
+  .forgot-password {
+    color: blue; /* Color for the forgot password link */
+    text-decoration: underline; /* Underline for the link */
+    cursor: pointer; /* Pointer cursor */
+  }
+  
+  .facebook-btn {
+    background-color: #3b5998; /* Facebook blue */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding for the button */
+    cursor: pointer; /* Pointer cursor */
+    width: 100%; /* Full width */
+  }
+  
+  .facebook-btn:hover {
+    background-color: #2d4373; /* Darker blue on hover */
+  }
+  
+  .terms,
+  .signup {
+    text-align: center; /* Center text */
+    font-size: 12px; /* Smaller font size */
+  }
+  
+  .forgot-password {
+    color: red; /* Red color for the link */
+    text-decoration: underline; /* Underline for the link */
+  }
+  
+  .login-popup {
+    /* Existing styles */
+    background-color: white; /* White background for the popup */
+    padding: 20px; /* Padding for content */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  }
+  
+  .popup-content h2 {
+    font-size: 24px; /* Title size */
+    text-align: center; /* Center text */
+  }
+  
+  .popup-content h3 {
+    font-size: 18px; /* Subtitle size */
+    text-align: center; /* Center text */
+    margin: 10px 0; /* Margin for spacing */
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Padding for inputs */
+    margin: 10px 0; /* Margin for spacing */
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 5px; /* Rounded corners for inputs */
+  }
+  
+  .login-btn {
+    background-color: #4caf50; /* Green button color */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners for buttons */
+    padding: 10px; /* Padding for buttons */
+    cursor: pointer; /* Pointer cursor */
+    width: 100%; /* Full width */
+  }
+  
+  .login-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  .forgot-password {
+    color: blue; /* Color for the forgot password link */
+    text-decoration: underline; /* Underline for the link */
+    cursor: pointer; /* Pointer cursor */
+    display: block; /* Block display for spacing */
+    text-align: center; /* Center text */
+  }
+  
+  .popup-content p {
+    text-align: center; /* Center text */
+  }
+  
+  /* Dark Background for Header Section */
+  .login-header {
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #1b1b1b; /* Dark background for the header */
+    color: white; /* White text for better contrast */
+    padding: 10px; /* Padding for the header */
+    text-align: center; /* Center text */
+  }
+  
+  /* Title and Subtitle Styles */
+  .login-title,
+  .login-subtitle {
+    text-align: center; /* Center text */
+    margin: 10px 0; /* Margin for spacing */
+  }
+  
+  /* Login Popup Background */
+  .login-popup {
+    background-color: white; /* Make the popup background transparent */
+  }
+  
+  /* Popup Content */
+  .popup-content {
+    background-color: white; /* White background for the content inside the popup */
+    padding: 20px; /* Padding for content */
+    border-radius: 0; /* Remove rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    position: relative; /* Position relative for absolute positioning of header */
+  }
+  
+  /* Dark Background for Header Section */
+  .login-header {
+    background-color: #1b1b1b; /* Dark background for the header */
+    color: white; /* White text for better contrast */
+    padding: 10px; /* Padding for the header */
+    border-radius: 0; /* Remove rounded corners */
+    text-align: center; /* Center text */
+    position: absolute; /* Position absolute to overlap */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    right: 0; /* Align to the right */
+  }
+  
+  /* Title and Subtitle Styles */
+  .login-title,
+  .login-subtitle {
+    text-align: center; /* Center text */
+    margin: 10px 0; /* Margin for spacing */
+  }
+  
+  /* Adjust the padding of the popup content to account for the header */
+  .popup-content {
+    padding-top: 60px; /* Adjust this value based on header height */
+  }
+  
+  /* Login Container */
+  .login-container {
+    padding: 20px 0; /* Padding for the container */
+    margin-top: 100px;
+  }
+  
+  /* Input Styles */
+  input[type="text"],
+  input[type="password"] {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Padding for inputs */
+    margin: 10px 0; /* Margin for spacing */
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 0; /* Remove rounded corners */
+    box-sizing: border-box; /* Ensure padding is included in width */
+  }
+  
+  /* Button Styles */
+  .login-btn {
+    background-color: #4caf50; /* Green button color */
+    color: white; /* White text */
+    border-radius: 0; /* Remove rounded corners */
+    padding: 10px; /* Padding for buttons */
+    cursor: pointer; /* Pointer cursor */
+    width: 100%; /* Full width */
+  }
+  
+  /* Link Styles */
+  .forgot-password,
+  .create-account {
+    text-align: center; /* Center text */
+    display: block; /* Block display for spacing */
+    margin-top: 10px; /* Margin for spacing */
+  }
+  
+  /* Center the text in the login container */
+  .login-container h3 {
+    text-align: center; /* Center the heading */
+    margin-bottom: 20px; /* Add some space below the heading */
+  }
+  
+  /* Member Sign In Button */
+  .member-sign-in {
+    background-color: red; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 20px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for the button */
+    cursor: pointer; /* Pointer cursor */
+    display: block; /* Make it a block element */
+    margin: 0 auto; /* Center the button */
+    text-align: center; /* Center text inside the button */
+    width: 200px;
+    height: 40px;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    transition: background-color 0.7s ease; /* Transition effect for background color */
+  }
+  
+  /* Hover Effect */
+  .member-sign-in:hover {
+    background-color: #333333; /* Change to grey on hover */
+  }
+  
+  .sign-in-container {
+    margin-top: 30px;
+  }
+  
+  .image-member {
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    height: auto;
+  }
+  
+  .image-container {
+    text-align: center; /* Center the image horizontally */
+    margin: 20px 0; /* Add some margin for spacing */
+  }
+  
+  .resized-image {
+    width: 300px; /* Set the desired width */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .sign-in-container h3 {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .quick-checkout {
+    text-align: center; /* Center text */
+    margin: 20px 0; /* Add margin for spacing */
+  }
+  
+  .line {
+    display: inline-block; /* Make it inline */
+    width: 5%; /* Adjust width as needed */
+    height: 2px; /* Line thickness */
+    background-color: #ccc; /* Line color */
+    vertical-align: middle; /* Align with the text */
+    margin: 0 10px; /* Space between the line and text */
+  }
+  
+  .quick-checkout span {
+    font-size: 24px; /* Font size for the heading */
+    margin: 0; /* Remove margin */
+    font-weight: bold;
+    color: black;
+  }
+  
+  .input-container {
+    position: relative; /* Position relative for absolute positioning of label */
+    margin: 20px 0; /* Space between inputs */
+  }
+  
+  input {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding for inputs */
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+  }
+  
+
+  input:focus {
+    border-color: #d62300; /* Change border color on focus */
+  }
+  
+  label {
+    position: absolute; /* Position label absolutely */
+    left: 10px; /* Position from the left */
+    top: 10px; /* Position from the top */
+    color: #aaa; /* Light color for label */
+    transition: 0.2s ease all; /* Smooth transition for label */
+    pointer-events: none; /* Prevent label from capturing clicks */
+  }
+  
+  input:focus + label,
+  input:not(:placeholder-shown) + label {
+    top: -10px; /* Move label up */
+    left: 10px; /* Keep label aligned */
+    font-size: 12px; /* Smaller font size */
+    color: #d62300; /* Change color when focused */
+  }
+  
+  .input-container {
+    position: relative;
+    margin: 20px 0;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: -15px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  input:focus {
+    border-color: #d62300;
+  }
+  
+  label {
+    position: absolute;
+    left: 10px;
+    top: 18px;
+    color: #aaa;
+    transition: 0.2s ease all;
+    pointer-events: none;
+    color: black;
+  }
+  
+  input:focus + label,
+  input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #d62300;
+  }
+  
+  .button-submit {
+    margin-left: 10px;
+    margin-top: 20px;
+  }
+  
+  .submit-button {
+    background-color: red; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 20px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for the button */
+    cursor: pointer; /* Pointer cursor */
+    display: block; /* Make it a block element */
+    margin: 0 auto; /* Center the button */
+    text-align: center; /* Center text inside the button */
+    width: 200px;
+    height: 40px;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    transition: background-color 0.7s ease; /* Transition effect for background color */
+  }
+  
+  .submit-button:hover {
+    background-color: black; /* Change to grey on hover */
+  }
+  
+  .account-links {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .separator {
+    margin: 0 10px;
+  }
+  
+  .contact-input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  
+  .contact-label {
+    position: static !important;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333 !important;
+    font-size: 0.9rem;
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 0.25rem;
+  }
+  
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #d62300;
+    outline: none;
+  }
+  
+  /* Make sure these styles don't affect contact form labels */
+  .input-container label {
+    position: absolute;
+    left: 10px;
+    top: 18px;
+    color: #aaa;
+    transition: 0.2s ease all;
+    pointer-events: none;
+    color: black;
+  }
+  
+  .input-container input:focus + label,
+  .input-container input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #d62300;
+  }
+  
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 999;
+  }
+  
+  .login-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    /* Add any other styling you want for your popup */
+  }
+
+.scroll-animation {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease-out;
+}
+
+.scroll-animation.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered delays */
+.delay-1 { transition-delay: 0.2s; }
+.delay-2 { transition-delay: 0.4s; }
+.delay-3 { transition-delay: 0.6s; }
+
+/* Optional: Add different animations for different elements */
+.scroll-animation.fade-left {
+    transform: translateX(-50px);
+}
+
+.scroll-animation.fade-right {
+    transform: translateX(50px);
+}
+
+.scroll-animation.fade-up {
+    transform: translateY(50px);
+}
+
+.scroll-animation.fade-down {
+    transform: translateY(-50px);
+}
+
+/* Active states for different animations */
+.scroll-animation.fade-left.active,
+.scroll-animation.fade-right.active,
+.scroll-animation.fade-up.active,
+.scroll-animation.fade-down.active {
+    transform: translate(0);
+    opacity: 1;
+}
+
+/* Add this CSS to hide the Go Back button by default */
+
+
+
